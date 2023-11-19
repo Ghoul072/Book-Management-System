@@ -81,3 +81,25 @@ class BookAPITests(TestCase):
         response = self.client.post(reverse('book-c'), valid_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST) # Bad Request as date is in the future
         self.assertEqual(Book.objects.count(), 3) # No new books added
+        
+    def test_create_book_missing_title(self):
+        # Test creating a book without providing a title
+        data = {
+            "author": "Author456",
+            "publicationYear": 2023,
+            "genre": "Test"
+        }
+        response = self.client.post(reverse('book-c'), data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(Book.objects.count(), 1)  # No new book should be added
+        
+    def test_create_book_missing_author(self):
+        # Test creating a book without providing an author
+        data = {
+            "title": "DEF",
+            "publicationYear": 2023,
+            "genre": "Test"
+        }
+        response = self.client.post(reverse('book-c'), data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(Book.objects.count(), 1)  # No new books should be added
