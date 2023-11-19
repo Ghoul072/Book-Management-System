@@ -2,6 +2,75 @@
 
 Simple CRUD API for a book management system using Django
 
+## Setup Guide
+
+### Prerequisites
+Ensure you have the following installed:
+- Python (Python 3.x)
+- Pip (Python package installer)
+- Git (version control system)
+
+### Setup Steps
+
+1. **Clone the Project Repository:**
+    ```bash
+    git clone <repository_url>
+    cd <project_directory>
+    ```
+
+2. **Create a Virtual Environment (Optional but Recommended):**
+    ```bash
+    python -m venv venv_name
+    ```
+    
+3. Activate the virtual environment:
+    ```
+    # On Windows
+    venv_name\Scripts\activate
+    
+    # On macOS / Linux
+    source venv_name/bin/activate
+    ```
+
+4. **Install Project Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+5. **Database Setup (Assuming SQLite for simplicity):**
+    ```bash
+    python manage.py migrate
+    ```
+    
+6. **Navigate to the `book_management_system` folder**
+   ```bash
+    cd book_management_system
+    ```
+   
+7. **Create Superuser (For Django Admin Access):**
+    ```bash
+    python manage.py createsuperuser
+    # Follow the prompt to set username, email, and password
+    ```
+
+8. **Run Tests:**
+    ```bash
+    python manage.py test
+    ```
+
+9. **Run the Django Development Server:**
+    ```bash
+    python manage.py runserver
+    ```
+
+10. **Access the Application:**
+    Open a web browser and go to `http://127.0.0.1:8000/` to view your application.
+    - Use the `/admin/` route to access the Django admin panel and log in with the superuser credentials you created.
+    - Use the below API Guide to make use of the Book Management API
+
+
+# Book Management API
+
 ## Authentication
 
 This API uses JSON Web Token (JWT) authentication. To authenticate and receive a token, use the following endpoints:
