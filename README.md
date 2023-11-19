@@ -42,14 +42,15 @@ Ensure you have the following installed:
     pip install -r requirements.txt
     ```
 
-5. **Database Setup (Assuming SQLite for simplicity):**
-    ```bash
-    python manage.py migrate
-    ```
-    
-6. **Navigate to the `book_management_system` folder**
+5. **Navigate to the `book_management_system` folder**
    ```bash
     cd book_management_system
+    ```
+    
+6. **Database Setup (Assuming SQLite for simplicity):**
+    ```bash
+    python manage.py makemigrations
+    python manage.py migrate
     ```
    
 7. **Create Superuser (For Django Admin Access):**
