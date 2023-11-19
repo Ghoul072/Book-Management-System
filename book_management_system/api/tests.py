@@ -4,7 +4,6 @@ from rest_framework import status
 from datetime import datetime as dt
 
 from .models import Book
-from .serializers import BookSerializer
 
 class BookAPITests(TestCase):
     def setUp(self) -> None:
