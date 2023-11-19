@@ -231,3 +231,14 @@ class Pagination_Test(TestCase):
 
         # Verify that the next page contains the remaining items
         self.assertEqual(len(next_page_response.data['results']), 5)  # Remaining items (15 total books)
+        
+    def test_fetch_second_page(self):
+        # Make a GET request to fetch the second page
+        response = self.client.get(reverse('book-c'), {'page': 2})
+
+        # Ensure the request was successful
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Ensure the second page is retrieved
+        self.assertTrue(response.data['results'])
+        self.assertEqual(len(response.data['results']), 5)  # Check for 5 items on the second page
