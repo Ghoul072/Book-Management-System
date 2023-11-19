@@ -2,7 +2,12 @@
 
 Simple CRUD API for a book management system using Django
 
-## Setup Guide
+## Table of Contents
+- [Setup Guide](#setup)
+- [Docker Containerization](#docker)
+- [Book Management API](#api-docs)
+
+# <a name="setup">Setup Guide</a>
 
 ### Prerequisites
 Ensure you have the following installed:
@@ -10,7 +15,7 @@ Ensure you have the following installed:
 - Pip (Python package installer)
 - Git (version control system)
 
-### Setup Steps
+### Setup Steps <a name="setup"></a>
 
 1. **Clone the Project Repository:**
     ```bash
@@ -66,10 +71,39 @@ Ensure you have the following installed:
 10. **Access the Application:**
     Open a web browser and go to `http://127.0.0.1:8000/` to view your application.
     - Use the `/admin/` route to access the Django admin panel and log in with the superuser credentials you created.
-    - Use the below API Guide to make use of the Book Management API
+    - Use [the below API Guide](#api-docs) to make use of the Book Management API
+   
+# <a name="docker">Docker Containerization</a>
+
+This Django application has Docker support included. You can utilize Docker to containerize the application for easier deployment.
+
+## Building and Running the Containers
+
+1. **Build the Docker Image:**
+   Run the following command in the terminal where the Dockerfile is located:
+
+    ```bash
+    docker build -t book-management-system .
+    ```
+
+2. **Run the Docker Container:**
+   Start the container using the docker-compose file:
+
+    ```bash
+    docker-compose up
+    ```
+
+   Or, if you prefer to run the container directly:
+
+    ```bash
+    docker run -p 8000:8000 book-management-system
+    ```
+
+3. **Access the Application:**
+   Once the container is up and running, access the Django application via a web browser using `http://127.0.0.1:8000/` or `http://localhost:8000/`.
 
 
-# Book Management API
+# <a name="api-docs">Book Management API</a>
 
 ## Authentication
 
