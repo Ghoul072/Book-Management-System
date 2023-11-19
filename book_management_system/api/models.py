@@ -21,3 +21,4 @@ class Book(models.Model):
     class Meta:
         verbose_name = "Book"
         verbose_name_plural = "Books"
+        ordering = ['title', 'author'] # Order by title. if 2 books have the same title, order by author
