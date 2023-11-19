@@ -145,3 +145,43 @@ class BookAPITests(TestCase):
         response = self.client.post(reverse('book-c'), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(Book.objects.count(), 1)  # No new books should be added
+        
+
+class Pagination_Test(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        # Create 15 books for testing pagination
+        for i in range(15):
+            Book.objects.create(
+                title=f"Book {i}",
+                author=f"Author {i}",
+                publicationYear=2000 + i,
+                genre="Test Genre"
+            )
+
+    def test_pagination_structure(self):
+        response = self.client.get(reverse('book-c'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Check the structure of the paginated response
+        self.assertIn('results', response.data)
+        self.assertIn('count', response.data)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+
+        # Verify the number of items per page
+        self.assertEqual(len(response.data['results']), 10)  # Page size is set to 10
+
+    def test_pagination_next_page(self):
+        response = self.client.get(reverse('book-c'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        next_page_url = response.data['next']
+        self.assertIsNotNone(next_page_url)
+
+        # Access the next page
+        next_page_response = self.client.get(next_page_url)
+        self.assertEqual(next_page_response.status_code, status.HTTP_200_OK)
+
+        # Verify that the next page contains the remaining items
+        self.assertEqual(len(next_page_response.data['results']), 5)  # Remaining items (15 total books)
