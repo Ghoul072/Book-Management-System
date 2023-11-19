@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
+from datetime import datetime as dt
 
 from .models import Book
 
@@ -40,4 +41,40 @@ class BookAPITests(TestCase):
         response = self.client.delete(reverse('book-rud', kwargs={'pk': self.book.id}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Book.objects.count(), 0)
+        
+    def test_publication_year_validation(self):
+        current_year = dt.now().year
+
+        # Check with current year
+        valid_data = {
+            'title': 'Test Book',
+            'author': 'Test Author',
+            'publicationYear': current_year,
+            'genre': 'Test Genre'
+        }
+        response = self.client.post(reverse('book-c'), valid_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Book.objects.count(), 2)
+        
+        # Check with past year
+        valid_data = {
+            'title': 'Test Book',
+            'author': 'Test Author',
+            'publicationYear': current_year - 1,
+            'genre': 'Test Genre'
+        }
+        response = self.client.post(reverse('book-c'), valid_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Book.objects.count(), 3)
+        
+        # Check with future year. This should raise an error
+        valid_data = {
+            'title': 'Test Book',
+            'author': 'Test Author',
+            'publicationYear': current_year + 1,
+            'genre': 'Test Genre'
+        }
+        response = self.client.post(reverse('book-c'), valid_data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST) # Bad Request as date is in the future
+        self.assertEqual(Book.objects.count(), 3) # No new books added
         
