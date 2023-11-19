@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
     
-class Book:
+class Book(models.Model):
     id = models.AutoField(primary_key=True)  # Auto-incrementing integer ID
     title = models.CharField(max_length=255)  # String field for the title
     author = models.CharField(max_length=255)  # String field for the author's name
