@@ -4,6 +4,12 @@ from datetime import datetime as dt
 from .models import Book
 
 class BookSerializer(serializers.ModelSerializer):
+    
+    # Validation for required fields
+    title = serializers.CharField(required=True)
+    author = serializers.CharField(required=True)
+    
+    
     class Meta:
         model = Book
         fields = ('id', 'title', 'author', 'publicationYear', 'genre')
