@@ -30,7 +30,7 @@ curl -X GET http://yourapi.com/books/?page=1
 ```
 
 **Response (200 OK - JSON):**
-```js
+```json
 {
     "count": 10,
     "next": "http://yourapi.com/books/?page=2",
@@ -43,7 +43,13 @@ curl -X GET http://yourapi.com/books/?page=1
             "publicationYear": 2005,
             "genre": "Fiction"
         },
-        // Other book details...
+        {
+            "id": 2,
+            "title": "Yet Another Book, and so on",
+            "author": "Author Name",
+            "publicationYear": 2020,
+            "genre": "Fiction"
+        },
     ]
 }
 ```
