@@ -19,8 +19,8 @@ Ensure you have the following installed:
 
 1. **Clone the Project Repository:**
     ```bash
-    git clone <repository_url>
-    cd <project_directory>
+    git clone https://github.com/Ghoul072/Book-Management-System
+    cd Book-Management-System
     ```
 
 2. **Create a Virtual Environment (Optional but Recommended):**
