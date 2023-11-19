@@ -30,7 +30,7 @@ curl -X GET http://yourapi.com/books/?page=1
 ```
 
 **Response (200 OK - JSON):**
-```json
+```js
 {
     "count": 10,
     "next": "http://yourapi.com/books/?page=2",
@@ -156,6 +156,6 @@ curl -X DELETE -H "Authorization: Bearer <token>" http://yourapi.com/books/1/
 ```
 
 **Response (204 No Content):**
-```json
+```
 No content returned for a successful deletion.
 ```
