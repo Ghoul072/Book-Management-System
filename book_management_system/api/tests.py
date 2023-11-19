@@ -1,14 +1,56 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth.models import User
+
 from rest_framework import status
 from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import AccessToken
+
 from datetime import datetime as dt
 
 from .models import Book
 
+
+class AuthenticationTestCase(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_unauthenticated_request(self):
+        # Make an unauthenticated request to the endpoint
+        response = self.client.get(reverse('book-c'))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        
+    def test_authentication(self):
+        # Create a user
+        user = User.objects.create_user(username='testuser', password='testpassword')
+        # Authenticate and get JWT token
+        response = self.client.post(
+            reverse('token_obtain_pair'),
+            {'username': "testuser", 'password': "testpassword"},
+            format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('access', response.data)
+        self.assertIn('refresh', response.data)
+
+        access_token = response.data['access']
+
+        # Use the obtained token for authenticated requests
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {access_token}')
+
+        # Make an authenticated request to the endpoint
+        response = self.client.get(reverse('book-c'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
 class BookAPITests(TestCase):
     def setUp(self) -> None:
+        
         self.client = APIClient()
+        user = User.objects.create_user(username='testuser', password='testpassword')   # Create a test user
+        access_token = AccessToken.for_user(user)                                       # Generate an access token for the user
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {access_token}')            # Set the token in the HTTP header
+        
         # Create a book instance for testing
         self.book = Book.objects.create(
             title="ABC",
@@ -52,7 +94,6 @@ class BookAPITests(TestCase):
 
         # Retrieve the updated book from the database
         updated_book = Book.objects.get(id=book.id)
-        print(updated_book)
 
         # Verify that the book details are updated as expected
         self.assertEqual(updated_book.title, "Updated Title")
@@ -149,7 +190,12 @@ class BookAPITests(TestCase):
 
 class Pagination_Test(TestCase):
     def setUp(self):
+        
         self.client = APIClient()
+        user = User.objects.create_user(username='testuser', password='testpassword')   # Create a test user
+        access_token = AccessToken.for_user(user)                                       # Generate an access token for the user
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {access_token}')            # Set the token in the HTTP header
+        
         # Create 15 books for testing pagination
         for i in range(15):
             Book.objects.create(
