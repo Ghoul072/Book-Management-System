@@ -1,12 +1,14 @@
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APIClient
 from datetime import datetime as dt
 
 from .models import Book
 
 class BookAPITests(TestCase):
     def setUp(self) -> None:
+        self.client = APIClient()
         # Create a book instance for testing
         self.book = Book.objects.create(
             title="ABC",
@@ -26,6 +28,46 @@ class BookAPITests(TestCase):
         response = self.client.get(reverse('book-rud', kwargs={'pk': self.book.id}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['title'], 'ABC')
+        
+    def test_update_book(self):
+        # Create a book to update
+        book = Book.objects.create(
+            title="Original Title",
+            author="Original Author",
+            publicationYear=2023,
+            genre="Test"
+        )
+
+        # Data for updating the book
+        update_data = {
+            "title": "Updated Title",
+            "author": "Updated Author",
+            "publicationYear": 2019,
+            "genre": "Updated Genre"
+        }
+
+        # Test updating the book details via PUT request
+        response = self.client.put(reverse('book-rud', kwargs={'pk': book.id}), update_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Retrieve the updated book from the database
+        updated_book = Book.objects.get(id=book.id)
+        print(updated_book)
+
+        # Verify that the book details are updated as expected
+        self.assertEqual(updated_book.title, "Updated Title")
+        self.assertEqual(updated_book.author, "Updated Author")
+        self.assertEqual(updated_book.publicationYear, 2019)
+        self.assertEqual(updated_book.genre, "Updated Genre")
+        
+    def test_update_invalid_book(self):
+        # Test updating a book with invalid information
+        data = {
+            'publicationYear': -1,  # Invalid publication year
+        }
+        url = reverse('book-rud', kwargs={'pk': self.book.id})
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         
     def test_create_book(self):
         # Test creating a new book
