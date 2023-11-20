@@ -130,14 +130,14 @@ This API uses JSON Web Token (JWT) authentication. To authenticate and receive a
 
 **Request (Curl):**
 ```bash
-curl -X GET http://yourapi.com/books/?page=1
+curl -X GET http://yourapi.com/api/books/?page=1
 ```
 
 **Response (200 OK - JSON):**
 ```json
 {
     "count": 10,
-    "next": "http://yourapi.com/books/?page=2",
+    "next": "http://yourapi.com/api/books/?page=2",
     "previous": null,
     "results": [
         {
@@ -178,7 +178,7 @@ curl -X GET http://yourapi.com/books/?page=1
 
 **Request (Curl):**
 ```bash
-curl -X POST -H "Authorization: Bearer <token>" -d '{"title": "New Book Title", "author": "New Author", "publicationYear": 2022, "genre": "Sci-Fi"}' -H "Content-Type: application/json" http://yourapi.com/books/
+curl -X POST -H "Authorization: Bearer <token>" -d '{"title": "New Book Title", "author": "New Author", "publicationYear": 2022, "genre": "Sci-Fi"}' -H "Content-Type: application/json" http://yourapi.com/api/books/
 ```
 
 **Response (201 Created - JSON):**
@@ -203,7 +203,7 @@ curl -X POST -H "Authorization: Bearer <token>" -d '{"title": "New Book Title", 
 
 **Request (Curl):**
 ```bash
-curl -X GET http://yourapi.com/books/1/
+curl -X GET http://yourapi.com/api/books/1/
 ```
 
 **Response (200 OK - JSON):**
@@ -237,7 +237,7 @@ curl -X GET http://yourapi.com/books/1/
 
 **Request (Curl):**
 ```bash
-curl -X PUT -H "Authorization: Bearer <token>" -d '{"title": "Updated Book Title", "author": "Updated Author", "publicationYear": 2023, "genre": "Updated Genre"}' -H "Content-Type: application/json" http://yourapi.com/books/1/
+curl -X PUT -H "Authorization: Bearer <token>" -d '{"title": "Updated Book Title", "author": "Updated Author", "publicationYear": 2023, "genre": "Updated Genre"}' -H "Content-Type: application/json" http://yourapi.com/api/books/1/
 ```
 
 **Response (200 OK - JSON):**
@@ -262,7 +262,7 @@ curl -X PUT -H "Authorization: Bearer <token>" -d '{"title": "Updated Book Title
 
 **Request (Curl):**
 ```bash
-curl -X DELETE -H "Authorization: Bearer <token>" http://yourapi.com/books/1/
+curl -X DELETE -H "Authorization: Bearer <token>" http://yourapi.com/api/books/1/
 ```
 
 **Response (204 No Content):**
