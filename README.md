@@ -110,8 +110,8 @@ This Django application has Docker support included. You can utilize Docker to c
 
 This API uses JSON Web Token (JWT) authentication. To authenticate and receive a token, use the following endpoints:
 
-- `POST /token/`: Obtain a JWT token by providing valid credentials (username and password).
-- `POST /token/refresh/`: Refresh the JWT token by providing a valid refresh token.
+- `POST api/token/`: Obtain a JWT token by providing valid credentials (username and password). This token will be valid for 1 hour.
+- `POST api/token/refresh/`: Refresh the JWT token by providing a valid refresh token. The refresh token is valid for 1 day.
 
 ## Endpoints
 
