@@ -3,7 +3,7 @@
 Simple CRUD API for a book management system using Django
 
 ## Table of Contents
-- [Setup Guide](#setup)
+- [Manual Setup Guide](#setup)
 - [Docker Containerization](#docker)
 - [Book Management API](#api-docs)
 
