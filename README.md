@@ -63,13 +63,15 @@ Ensure you have the following installed:
     ```bash
     python manage.py test
     ```
+9. **Add your hostname to Allowed Hosts**
+    If you're using any hostnames other than `localhost` and `127.0.0.1`, make sure to add your hostname to the ALLOWED_HOSTS list in `book_management_system\book_management_system\settings.py`
 
-9. **Run the Django Development Server:**
+10. **Run the Django Development Server:**
     ```bash
     python manage.py runserver
     ```
 
-10. **Access the Application:**
+11. **Access the Application:**
     Open a web browser and go to `http://127.0.0.1:8000/` to view your application.
     - Use the `/admin/` route to access the Django admin panel and log in with the superuser credentials you created.
     - Use [the below API Guide](#api-docs) to make use of the Book Management API
@@ -77,6 +79,13 @@ Ensure you have the following installed:
 # <a name="docker">Docker Containerization</a>
 
 This Django application has Docker support included. You can utilize Docker to containerize the application for easier deployment.
+
+## Prerequisites
+
+1. **Docker Installation**: Ensure Docker is installed and running on your machine. You can download and install docker [here](https://docs.docker.com/get-docker/)
+
+2. **Environment Configuration**:
+    - If you're using any hostnames other than `localhost` and `127.0.0.1`, make sure to add your hostname to the ALLOWED_HOSTS list in `book_management_system\book_management_system\settings.py`
 
 ## Building and Running the Containers
 
