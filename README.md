@@ -122,6 +122,14 @@ This API uses JSON Web Token (JWT) authentication. To authenticate and receive a
 - `POST api/token/`: Obtain a JWT token by providing valid credentials (username and password). This token will be valid for 1 hour.
 - `POST api/token/refresh/`: Refresh the JWT token by providing a valid refresh token. The refresh token is valid for 1 day.
 
+```bash
+# Get access token and refresh token by authentication
+curl -X POST -d "username=<username>&password=<passsword>" http://yourapi.com/api/token/
+
+# Get access token by providing refresh token
+curl -X POST -d "refresh=<your_refresh_token>" http://yourapi.com/api/token/refresh/
+```
+
 ## Endpoints
 
 ### Books
@@ -139,7 +147,7 @@ This API uses JSON Web Token (JWT) authentication. To authenticate and receive a
 
 **Request (Curl):**
 ```bash
-curl -X GET http://yourapi.com/api/books/?page=1
+curl -X GET -H "Authorization: Bearer <token>" http://yourapi.com/api/books/?page=1
 ```
 
 **Response (200 OK - JSON):**
@@ -212,7 +220,7 @@ curl -X POST -H "Authorization: Bearer <token>" -d '{"title": "New Book Title", 
 
 **Request (Curl):**
 ```bash
-curl -X GET http://yourapi.com/api/books/1/
+curl -X GET -H "Authorization: Bearer <token>" http://yourapi.com/api/books/1/
 ```
 
 **Response (200 OK - JSON):**
